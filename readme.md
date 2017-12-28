@@ -14,3 +14,17 @@ git log - View recent commits
 
 change use : [ 'css-loader','sass-loader ] && cheap-module-eval-source-map ---> use: [{loader:'css-loader',options : {sourceMap:true}},{loader:'sass-loader',options:{sourceMap:tru}}] &&
 inline-source-map
+
+
+#Test_Notes
+
+import React from 'react';
+import { shallow } from "enzyme";
+import { ExpensesSummary } from "../../components/ExpensesSummary";
+import expensess from '../fixtures/expenses'
+const check={expenses:[expensess[0]]}
+test("1 expense", () => {
+    const wrapper = shallow(<ExpensesSummary {...check}/>);
+    expect(wrapper).toMatchSnapshot()
+});
+//expenses={check} ghalateee
