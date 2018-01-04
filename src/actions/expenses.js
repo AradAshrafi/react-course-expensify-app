@@ -52,7 +52,7 @@ export const startRemoveExpense = ({ id } = {}) => {
         database
             .ref(`expenses/${id}`)
             .remove()
-            .then(snapshot => {
+            .then(() => {
                 toDispatch(removeExpense({ id }));
             });
     };
@@ -65,6 +65,12 @@ export const editExpense = (id, updates) => ({
     updates
 });
 
+
+export const startEditExpense = (id,updates)=>{
+    return(toDispatch)=>{
+        database.ref(`expenses/${id}`).update(updates).then(()=>toDispatch(editExpense(id,updates)));
+    }
+}
 //SET_EXPENSES
 
 export const setExpense = expenses => {
@@ -82,7 +88,6 @@ export const startSetExpenses = () => {
             .then(snapshot => {
                 const expenses = [];
                 snapshot.forEach(element => {
-                    console.log(element.key)
                     expenses.push({
                         id: element.key,
                         ...element.val()
