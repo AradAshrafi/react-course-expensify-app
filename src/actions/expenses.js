@@ -2,6 +2,7 @@
 import database from '../firebase/firebase';
 
 // ADD_EXPENSE
+
 // {
 //   description = '',
 //   note = '',
@@ -9,31 +10,32 @@ import database from '../firebase/firebase';
 //   createdAt = 0
 // } = {}
 
-
-export const addExpense = (expense) => ({
+export const addExpense = expense => ({
     type: 'ADD_EXPENSE',
     expense
     // id: uuid(),
 });
 
 export const startAddExpense = (expenseData = {}) => {
-    return dispatch => {
+    return x => {
         const {
             description = '',
             note = '',
             amount = 0,
             createdAt = 0
         } = expenseData;
-        const expense = { description , note , amount , createdAt };
+        const expense = { description, note, amount, createdAt };
 
         database
             .ref('expenses')
             .push(expense)
-            .then((ref) => {
-                dispatch(addExpense({
-                  id: ref.key,
-                  ...expense
-                })); 
+            .then(ref => {
+                x(
+                    addExpense({
+                        id: ref.key,
+                        ...expense
+                    })
+                );
             });
     };
 };
@@ -50,3 +52,30 @@ export const editExpense = (id, updates) => ({
     id,
     updates
 });
+
+//SET_EXPENSES
+
+export const setExpense = expenses => {
+    return {
+        type: 'SET_EXPENSES',
+        expenses
+    };
+};
+
+export const startSetExpenses = () => {
+    return toDispatch => {
+        return database
+            .ref('expenses')
+            .once('value')
+            .then(snapshot => {
+                const expenses = [];
+                snapshot.forEach(element => {
+                    expenses.push({
+                        id:element.key,
+                        ...element.val()
+                    });
+                });
+                toDispatch(setExpense(expenses));
+            });
+    };
+};

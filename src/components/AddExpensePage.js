@@ -15,4 +15,4 @@ const AddExpensePage = (props) => (
   </div>
 );
 
-export default connect()(AddExpensePage);
+export default connect( )(AddExpensePage);
