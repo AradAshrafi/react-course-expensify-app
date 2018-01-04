@@ -46,6 +46,18 @@ export const removeExpense = ({ id } = {}) => ({
     id
 });
 
+export const startRemoveExpense = ({ id } = {}) => {
+    return toDispatch => {
+        const expenses = [];
+        database
+            .ref(`expenses/${id}`)
+            .remove()
+            .then(snapshot => {
+                toDispatch(removeExpense({ id }));
+            });
+    };
+};
+
 // EDIT_EXPENSE
 export const editExpense = (id, updates) => ({
     type: 'EDIT_EXPENSE',
@@ -70,8 +82,9 @@ export const startSetExpenses = () => {
             .then(snapshot => {
                 const expenses = [];
                 snapshot.forEach(element => {
+                    console.log(element.key)
                     expenses.push({
-                        id:element.key,
+                        id: element.key,
                         ...element.val()
                     });
                 });
