@@ -1,0 +1,19 @@
+.page-header{
+    background-color : $off-white ;
+    padding:$l-size 0;//content-container will justify the left right padding
+    margin-bottom:$l-size;
+}
+
+.page-header__title{
+    margin:0;
+    font-weight: 300;
+    span{
+        font-weight: bold;//or 700
+    }
+}
+
+.page-header--actions{
+    margin-top:$m-size;
+}
+
+

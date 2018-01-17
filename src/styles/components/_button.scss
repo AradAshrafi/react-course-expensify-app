@@ -1,0 +1,22 @@
+.button{
+    background-color: $blue;
+    color:white;
+    border:none;
+    display:inline-block;//added for times that we want to see links as buttons
+    padding:$s-size;
+    line-height: 1;
+    // width: 20rem; :-?y did i add this for login ? consider this if u ran into bugs
+    font-weight:300;
+    font-size: $font-size-large;
+    text-decoration: none;
+}
+
+.button__link{
+    background:none;
+}
+.button--remove{
+    @extend .button ;
+    background-color :#888888;
+}
+
+//or can use both button and button--remove classNames together -> className = "button button--remove"
